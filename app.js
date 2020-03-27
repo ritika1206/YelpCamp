@@ -3,7 +3,7 @@ var app = express();
 
 app.set("view engine", "ejs");
 
-app.get("/", function(req, res){
+app.get("/", (req, res) => {
     // res.send("this will be the landing page of yelpcamp app");
     res.render("landing.ejs");
 });
