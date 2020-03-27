@@ -8,11 +8,11 @@ app.get("/", function(req, res){
     res.render("landing.ejs");
 });
 
-app.get("/campGrounds", function(req, res){
+app.get("/campGrounds", (req, res) => {
     // res.send("this will be the landing page of yelpcamp app");
     res.render("campGrounds.ejs");
 });
 
-var server = app.listen(3000, function(){
+var server = app.listen(3000, () => {
     console.log("the sever has been started.");
 });
