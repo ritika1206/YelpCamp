@@ -1,4 +1,5 @@
 var express = require("express");
+var ejs = require("ejs");
 var app = express();
 var bodyParser = require("body-parser");
 
@@ -18,7 +19,7 @@ app.get("/", (req, res) => {
 
 app.get("/campGrounds", (req, res) => {
     // res.send("this will be the landing page of yelpcamp app");
-    res.render("campGrounds", {campGrouds: campGrounds});
+    res.render("campGrounds", {campGrounds: campGrounds});
 });
 
 app.post("/campGrounds", (req, res) => {
