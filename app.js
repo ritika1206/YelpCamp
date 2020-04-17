@@ -4,16 +4,16 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/yelp-camp-app");
-mongoose.connect(uri, { useNewUrlParser: true });
-mongoose.connect(uri, { useFindAndModify: false });
-mongoose.connect(uri, { useCreateIndex: true });
+mongoose.connect("uri", { useNewUrlParser: true });
+mongoose.connect("uri", { useFindAndModify: false });
+mongoose.connect("uri", { useCreateIndex: true });
 
 var campGroundsSchema = new mongoose.Schema({
     name: String,
     image: String
 });
 
-var campGrounds = mongoose.model("campGrounds", "campGroundsSchema");
+var campGrounds = mongoose.model("campGrounds", campGroundsSchema);
 
 
 mongoose.set('useNewUrlParser', true);

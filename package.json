@@ -1,15 +1,26 @@
 {
   "name": "v1",
   "version": "1.0.0",
-  "description": "yelpcamp version 1",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritika221b/yelpCamp-app.git"
+  },
   "author": "ritika221b",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ritika221b/yelpCamp-app/issues"
+  },
+  "homepage": "https://github.com/ritika221b/yelpCamp-app#readme",
   "dependencies": {
-    "ejs": "^3.0.1",
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.6",
+    "mongoose": "^5.9.9"
   }
 }
