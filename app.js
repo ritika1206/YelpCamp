@@ -7,6 +7,7 @@ mongoose.connect("mongodb://localhost/yelp-camp-app");
 mongoose.connect("uri", { useNewUrlParser: true });
 mongoose.connect("uri", { useFindAndModify: false });
 mongoose.connect("uri", { useCreateIndex: true });
+mongoose.connect("uri", { useUnifiedTopology: true });
 
 var campGroundsSchema = new mongoose.Schema({
     name: String,
@@ -14,7 +15,6 @@ var campGroundsSchema = new mongoose.Schema({
 });
 
 var campGrounds = mongoose.model("campGrounds", campGroundsSchema);
-
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -45,6 +45,6 @@ app.get("/campGrounds/new", (req, res) => {
     res.render("new");
 });
 
-var server = app.listen('3636', () => {
+var server = app.listen('4646', () => {
     console.log("the sever has been started.");
 });
