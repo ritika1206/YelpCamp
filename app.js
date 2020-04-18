@@ -3,11 +3,11 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/yelp-camp-app");
-mongoose.connect("uri", { useNewUrlParser: true });
-mongoose.connect("uri", { useFindAndModify: false });
-mongoose.connect("uri", { useCreateIndex: true });
-mongoose.connect("uri", { useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/yelp-camp-app");
+mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useFindAndModify: false });
+mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useCreateIndex: true });
+mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useUnifiedTopology: true });
 
 var campGroundsSchema = new mongoose.Schema({
     name: String,
@@ -29,7 +29,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/campGrounds", (req, res) => {
-    res.render("campGrounds", {campGrounds: campGrounds});
+    campGrounds.find({}, (err, campGrounds) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            var campGroundsArray = Object.values(campGrounds);
+            res.render("campGrounds", {campGrounds: "campGroundsArray"});
+        }
+    })
 });
 
 app.post("/campGrounds", (req, res) => {    

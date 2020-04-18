@@ -15,10 +15,11 @@
         </div>
     </div>
     <div class="row" style="display: flex; flex-wrap: wrap;">
-            <% campGrounds.forEach(function(campGround){ %>
+       <!-- <% var campGroundsArray = Object.values(campGrounds) %> -->
+            <% campGroundsArray.forEach(function(campGround){ %>
                 <div class="col-md-3 col-sm-6"> 
                     <div class="thumbnail">
-                        <img src="<%= campGround.image %>"> 
+                        <img src="<%= campGround.image %>" >
                         <div class="caption text-center">
                             <h4><%= campGround.name %></h4>
                         </div>
