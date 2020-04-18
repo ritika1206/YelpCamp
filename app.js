@@ -29,13 +29,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/campGrounds", (req, res) => {
-    campGrounds.find({}, (err, campGrounds) => {
+    campGrounds.find({}, (err, allcampGrounds) => {
         if(err){
             console.log(err);
         }
         else{
-            var campGroundsArray = Object.values(campGrounds);
-            res.render("campGrounds", {campGrounds: "campGroundsArray"});
+            // var campGroundsArray = Object.values(campGrounds);
+            res.render("campGrounds", {campGrounds: "allcampGrounds"});
         }
     })
 });
