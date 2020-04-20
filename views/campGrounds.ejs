@@ -6,10 +6,10 @@
             <p>
                <h4> Hand-Picked camping destinations just a click away </h4>
             </p>
-            <p class="btn btn-secondary btn-lg">
+            <p class="btn btn-outline-primary btn-lg">
                 <a href="/">Home</a>
             </p>
-            <p class="btn btn-secondary btn-lg">
+            <p class="btn btn-outline-info btn-lg">
                 <a href="/campGrounds/new">Add CampGround</a>
             </p>        
         </div>
@@ -22,6 +22,16 @@
                         <img src="<%= campGround.image %>" >
                         <div class="caption text-center">
                             <h4><%= campGround.name %></h4>
+                        
+                        <div class="btn btn-outline-primary ">
+                            <a href="/campGrounds/<%= campGround._id %>"> <h4>more info</h4> </a>
+                        </div>
+                        <div>
+                            <a href="/campGrounds/<%= campGround._id %>/edit"> <h4>edit</h4></a>
+                        </div>
+                        <form action="/campGrounds/<%= campGround._id %>?_method=delete" method="post">
+                            <button class="btn btn-danger">delete</button>
+                        </form>
                         </div>
                     </div>
                 </div>

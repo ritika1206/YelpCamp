@@ -1,7 +1,9 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
+const express        = require("express"),
+      app            = express(),
+      bodyParser     = require("body-parser"),
+      mongoose       = require("mongoose"),
+      methodOverride = require("method-override");
+    
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp-app");
 mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useNewUrlParser: true });
@@ -11,7 +13,8 @@ mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useUnifiedTopology
 
 var campGroundsSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    desc: String
 });
 
 var campGrounds = mongoose.model("campGrounds", campGroundsSchema);
@@ -22,37 +25,98 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
+
 
 app.get("/", (req, res) => {
     res.render("landing");
 });
 
+//INDEX
 app.get("/campGrounds", (req, res) => {
     campGrounds.find({}, (err, allcampGrounds) => {
         if(err){
             console.log(err);
         }
         else{
-            // var campGroundsArray = Object.values(campGrounds);
-            res.render("campGrounds", {campGrounds: "allcampGrounds"});
+            res.render("campGrounds", {campGrounds: allcampGrounds});
         }
     })
 });
 
+//CREATE
 app.post("/campGrounds", (req, res) => {    
     var name = req.body.name;
     var image = req.body.image;
+    var desc = req.body.desc;
     
-    campGrounds.create({name: name, image: image});
+    campGrounds.create({name: name, image: image, desc: desc});
 
     res.redirect("/campGrounds");
 });
 
+//NEW
 app.get("/campGrounds/new", (req, res) => {
     res.render("new");
 });
 
-var server = app.listen('4646', () => {
+//SHOW
+app.get("/campGrounds/:id", (req, res) => {
+    var id = req.params.id;
+    campGrounds.findById(id, (err, campGround) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.render("show", {campGround: campGround});
+        }
+    });
+});
+
+//EDIT
+app.get("/campGrounds/:id/edit", (req, res) => {
+    campGrounds.findById(req.params.id, (err, campGround) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.render("edit", {id: req.params.id, campGround: campGround});
+        }
+    });
+});
+
+//UPDATE
+app.put("/campGrounds/:id", (req, res) => {
+    var name = req.body.name;
+    var image = req.body.image;
+    var desc = req.body.desc;
+
+    campGrounds.updateOne({_id: req.params.id}, {$set: {name: name, image: image, desc: desc}}, (err, campGround) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(campGround);
+            res.redirect("/campGrounds");
+        }
+    });
+});
+
+//DELETE
+app.delete("/campGrounds/:id", (req, res) => {
+    campGrounds.findByIdAndRemove(req.params.id, (err) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.redirect("/campGrounds");
+        }
+    });
+});
+
+
+
+app.listen('4646', () => {
     console.log("the sever has been started.");
 });

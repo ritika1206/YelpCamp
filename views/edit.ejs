@@ -1,0 +1,25 @@
+<%- include("partials/header") %>
+<div class="container">
+    <div class="jumbotron">
+        <h2>ENTER NEW DETAILS</h2>
+    </div>
+        <form action="/campGrounds/<%= id %>?_method=put" method="post">
+            <div class="form-group">
+            <label for="campGroundName"> <h4>Camp Ground Name</h4> </label>
+            <input type="text" class="form-control" name="name" value="<%= campGround.name %>">
+            </div>
+            <div class="form-group">
+            <label for="campGroundImage"> <h4>Camp Ground Image URL</h4> </label>
+            <input type="url" class="form-control" name="image" value="<%= campGround.image %>">
+            </div>
+            <div class="form-group">
+            <label for="campGroundDescription"> <h4>Camp Ground Description</h4> </label>
+            <input type="text" class="form-control" name="desc" value="<%= campGround.desc %>">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>   
+</div>
+
+
+
+<%- include("partials/footer") %>
