@@ -1,8 +1,7 @@
 var mongoose = require("mongoose");
-var campGrounds = require("./campGrounds");
-var users = require("./users");
-var comments = require("./comments");
-
+var Campgrounds = require("./campgrounds");
+var Comments   = require("./comments");
+ 
 var data = [
     {
         name: "Cloud's Rest", 
@@ -20,47 +19,46 @@ var data = [
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
     }
 ]
-
-function seedDb() {
-    campGrounds.remove({}, (err) => {
+ 
+function seedDB(){
+   //Remove all campgrounds
+   Campgrounds.remove({}, function(err){
         if(err){
             console.log(err);
         }
-        else{
-            console.log("all campGrounds removed");
-            comments.remove({}, (err) => {
-                if(err){
-                    console.log(err);
-                }
-                else{
-                    console.log("all the comments removed");
-                    data.forEach(function(seed){
-                        campGrounds.create(seed, (err, campGround) => {
-                            if(err){
-                                console.log(err);
-                            }
-                            else{
-                                console.log("campground added");
-                                comments.create(
-                                    {
-                                        text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." ,
-                                        author: "colt steele"
-                                    },
-                                (err, comment) => {
-                                    if(err){
-                                        console.log(err);
-                                    }
-                                    else{
-                                        console.log("comment added");
-                                        campGround.comments.push(comment);
-                                        campGround.save();
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
+        console.log("removed campgrounds!");
+        Comments.remove({}, function(err) {
+            if(err){
+                console.log(err);
+            }
+            console.log("removed comments!");
+             //add a few campgrounds
+            data.forEach(function(seed){
+                Campgrounds.create(seed, function(err, campground){
+                    if(err){
+                        console.log(err)
+                    } else {
+                        console.log("added a campground");
+                        //create a comment
+                        Comments.create(
+                            {
+                                text: "This place is great, but I wish there was internet",
+                                author: "Homer"
+                            }, function(err, comment){
+                                if(err){
+                                    console.log(err);
+                                } else {
+                                    campground.comments.push(comment);
+                                    campground.save();
+                                    console.log("Created new comment");
+                                }
+                            });
+                    }
+                });
             });
-        }
-    }
+        });
+    }); 
+    //add a few comments
 }
+ 
+module.exports = seedDB;

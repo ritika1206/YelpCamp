@@ -7,7 +7,7 @@ var userSchema = new mongoose.Schema({
     comments: [
         {
             id: mongoose.Schema.Types.ObjectId,
-            ref: comments
+            ref: "comments"
         }
     ]  
 });
