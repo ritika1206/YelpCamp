@@ -3,13 +3,13 @@ var users = require("./users");
 
 var commentSchema = new mongoose.Schema({
     text: String,
-    // author:{
-    //     id:{
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: "users"
-    //     },
-    //     username: String
-    // }
+    author:{
+        id:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
+    }
 });
 
-module.exports = mongoose.model("comments", commentSchema);
+module.exports = mongoose.model("Comment", commentSchema);

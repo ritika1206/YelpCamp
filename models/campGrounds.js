@@ -4,20 +4,22 @@ var campGroundsSchema = new mongoose.Schema({
     name: String,
     image: String,
     desc: String,
-    // author: {
-    //     id: {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: "users",
-    //     },
-    //     username: String
-    // },
-    // comments: [
-    //     {
-    //         id: mongoose.Schema.Types.ObjectId,
-    //         ref: "comments"
-    //     }
-    // ]
+    createdAt: {
+        type: Date,
+        deafult: Date.now
+    },
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }]
 });
 
 
-module.exports = mongoose.model("campGrounds", campGroundsSchema);
+module.exports = mongoose.model("CampGround", campGroundsSchema);
