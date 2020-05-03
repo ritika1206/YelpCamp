@@ -1,25 +1,25 @@
 var mongoose = require("mongoose");
-var comments = require("./comments.js");
-var users = require("./users");
 
 var campGroundsSchema = new mongoose.Schema({
     name: String,
     image: String,
     desc: String,
+    createdAt: {
+        type: Date,
+        deafult: Date.now
+    },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "users",
+            ref: "User"
         },
         username: String
     },
-    comments: [
-        {
-            id: mongoose.Schema.Types.ObjectId,
-            ref: "comments"
-        }
-    ]
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }]
 });
 
 
-module.exports = mongoose.model("campGrounds", campGroundsSchema);
+module.exports = mongoose.model("CampGround", campGroundsSchema);

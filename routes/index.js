@@ -5,8 +5,6 @@ const users = require("../models/users");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
-router.use("view engine", "ejs");
-
 // show register form
 router.get("/register", (req, res) => {
     res.render("/users/register");
