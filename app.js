@@ -1,19 +1,19 @@
 const express               = require("express"),
-      app                   = express(),
-      bodyParser            = require("body-parser"),
-      mongoose              = require("mongoose"),
-      methodOverride        = require("method-override"),
-      comments              = require("./models/comments"),
-      campGrounds           = require("./models/campGrounds"),
-      users                 = require("./models/users");
-      passport              = require("passport");
-      localStrategy         = require("passport-local");
-      passportLocalMongoose = require("passport-local-mongoose");
-      session               = require("express-session"),
-      seedDB                = require("./seeding");
+    session               = require("express-session"),
+    app                   = express(),
+    bodyParser            = require("body-parser"),
+    mongoose              = require("mongoose"),
+    methodOverride        = require("method-override"),
+    comments              = require("./models/comments"),
+    campGrounds           = require("./models/campGrounds"),
+    users                 = require("./models/users");
+    passport              = require("passport");
+    localStrategy         = require("passport-local");
+    passportLocalMongoose = require("passport-local-mongoose");
+    seedDB                = require("./seeding");
 
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app");
-// mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useNewUrlParser: true });
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useFindAndModify: false });
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useCreateIndex: true });
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useUnifiedTopology: true });
@@ -25,10 +25,12 @@ const express               = require("express"),
 
 var campGroundsRoutes = require("./routes/campGroundsRoutes");
     indexRoutes       = require("./routes/index");
-    commentsRoutes    = require("./routes/commentsRoutes");
+    commentsRoutes    = require("./routes/campGroundsRoutes");
 
+app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + "/public"));
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
@@ -36,18 +38,20 @@ app.use(methodOverride("_method"));
 app.use(session({
     secret: "hello there!",
     resave: false,
-    saveUninitialised: false
+    saveUninitialized: true
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(new localStrategy(users.authenticate()));
+
+passport.use(new localStrategy(users.authenticate()));
 
 passport.serializeUser(users.serializeUser());
 passport.deserializeUser(users.deserializeUser());
 
 app.set("view engine", "ejs");
 
-app.use("/campGrounds", campGroundsRoute);
+app.use("/campGrounds", campGroundsRoutes);
 app.use(indexRoutes);
 app.use("/campGrounds/:id/comments", commentsRoutes);
 
