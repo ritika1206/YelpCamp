@@ -19,7 +19,7 @@ function isLoggedIn(req, res, next){
     }
 }
 
-router.get("/campGrounds/:id/comments/new", isLoggedIn, (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
     campGrounds.findById(req.params.id, (err, foundCampGround) => {
         if(err){
             console.log(err);
@@ -31,7 +31,7 @@ router.get("/campGrounds/:id/comments/new", isLoggedIn, (req, res) => {
     })
 });
 
-router.post("/campGrounds/:id/comments", (req, res) => {
+router.post("/", (req, res) => {
     campGrounds.findById(req.params.id, (err, campGround) => {
         if(err){
             console.log(err);

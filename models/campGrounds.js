@@ -9,7 +9,7 @@ var campGroundsSchema = new mongoose.Schema({
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "users"
+            ref: "users",
         },
         username: String
     },
