@@ -23,6 +23,11 @@ const express               = require("express"),
 // mongoose.set('useCreateIndex', true);
 // mongoose.set('useUnifiedTopology', true);
 
+var campGroundsRoutes = require("./routes/campGroundsRoutes");
+    indexRoutes       = require("./routes/index");
+    commentsRoutes    = require("./routes/commentsRoutes");
+
+
 app.use(express.static(__dirname + "/public"));
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -44,7 +49,7 @@ app.set("view engine", "ejs");
 
 app.use("/campGrounds", campGroundsRoute);
 app.use(indexRoutes);
-app.use(commentsRoutes);
+app.use("/campGrounds/:id/comments", commentsRoutes);
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
@@ -56,12 +61,6 @@ seedDB();
 app.get("/", (req, res) => {
     res.render("landing");
 });
-
-var campGroundsRoutes = require("./routes/campGroundsRoutes");
-    indexRoutes       = require("./routes/index");
-    commentsRoutes    = require("./routes/commentsRoutes");
-
-
 
 app.listen('4646', () => {
     console.log("the sever has been started.");

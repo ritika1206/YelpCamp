@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({ extended: true }));
 
 //INDEX
-router.get("/campGrounds", (req, res) => {
+router.get("/", (req, res) => {
     campGrounds.find({}, (err, allcampGrounds) => {
         if(err){
             console.log(err);
@@ -18,7 +18,7 @@ router.get("/campGrounds", (req, res) => {
 });
 
 //CREATE
-router.post("/campGrounds", (req, res) => {    
+router.post("/", (req, res) => {    
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.desc;
@@ -29,12 +29,12 @@ router.post("/campGrounds", (req, res) => {
 });
 
 //NEW
-router.get("/campGrounds/new", (req, res) => {
+router.get("/new", (req, res) => {
     res.render("campGrounds/new");
 });
 
 //SHOW
-router.get("/campGrounds/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     var id = req.params.id;
     campGrounds.findById(id).populate("comments").exec((err, campGround) => {
         if(err){
@@ -47,7 +47,7 @@ router.get("/campGrounds/:id", (req, res) => {
 });
 
 //EDIT
-router.get("/campGrounds/:id/edit", (req, res) => {
+router.get("/:id/edit", (req, res) => {
     campGrounds.findById(req.params.id, (err, campGround) => {
         if(err){
             console.log(err);
@@ -59,7 +59,7 @@ router.get("/campGrounds/:id/edit", (req, res) => {
 });
 
 //UPDATE
-router.put("/campGrounds/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.desc;
@@ -76,7 +76,7 @@ router.put("/campGrounds/:id", (req, res) => {
 });
 
 //DELETE
-router.delete("/campGrounds/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     campGrounds.findByIdAndRemove(req.params.id, (err) => {
         if(err){
             console.log(err);
