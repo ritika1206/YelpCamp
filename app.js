@@ -13,7 +13,7 @@ const express               = require("express"),
       seedDB                = require("./seeding");
 
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app");
-// mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useNewUrlParser: true });
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useFindAndModify: false });
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useCreateIndex: true });
 // mongoose.connect("mongodb://localhost:27017/yelp-camp-app", { useUnifiedTopology: true });
@@ -40,16 +40,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(new localStrategy(users.authenticate()));
+passport.use(new localStrategy(users.authenticate()));
 
 passport.serializeUser(users.serializeUser());
 passport.deserializeUser(users.deserializeUser());
 
 app.set("view engine", "ejs");
-
-app.use("/campGrounds", campGroundsRoute);
-app.use(indexRoutes);
-app.use("/campGrounds/:id/comments", commentsRoutes);
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
@@ -61,6 +57,10 @@ seedDB();
 app.get("/", (req, res) => {
     res.render("landing");
 });
+
+app.use("/campGrounds", campGroundsRoutes);
+app.use("/campGrounds/:id/comments", commentsRoutes);
+app.use(indexRoutes);
 
 app.listen('4646', () => {
     console.log("the sever has been started.");

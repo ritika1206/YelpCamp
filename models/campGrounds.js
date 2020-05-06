@@ -9,17 +9,17 @@ var campGroundsSchema = new mongoose.Schema({
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "users",
+            ref: "User"
         },
         username: String
     },
     comments: [
         {
             id: mongoose.Schema.Types.ObjectId,
-            ref: "comments"
+            ref: "Comment"
         }
     ]
 });
 
 
-module.exports = mongoose.model("campGrounds", campGroundsSchema);
+module.exports = mongoose.model("CampGround", campGroundsSchema);
