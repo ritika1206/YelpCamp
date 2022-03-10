@@ -19,8 +19,7 @@
                     <% if(!currentUser){ %>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Sign Up</a></li>
-                   <%  } %>
-                    <% else{ %>
+                   <%  } else{ %>
                         <li><a href="#">Singned In as <%= currentUser.username %></a></li>
                         <li><a href="/logout">Logout</a></li>
                     <% } %>
